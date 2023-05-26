@@ -1,0 +1,98 @@
+/*
+SQLyog Trial v13.1.8 (64 bit)
+MySQL - 5.6.6-m9-log : Database - db_aba
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`db_aba` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `db_aba`;
+
+/*Table structure for table `players` */
+
+DROP TABLE IF EXISTS `players`;
+
+CREATE TABLE `players` (
+  `PlayerID` int(11) NOT NULL,
+  `FirstName` varchar(50) DEFAULT NULL,
+  `LastName` varchar(50) DEFAULT NULL,
+  `DateOfBirth` date DEFAULT NULL,
+  `height` varchar(10) DEFAULT NULL,
+  `Weight` varchar(11) DEFAULT NULL,
+  `Nationality` varchar(50) DEFAULT NULL,
+  `Position` varchar(50) DEFAULT NULL,
+  `JerseyNumber` int(11) DEFAULT NULL,
+  PRIMARY KEY (`PlayerID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `players` */
+
+insert  into `players`(`PlayerID`,`FirstName`,`LastName`,`DateOfBirth`,`height`,`Weight`,`Nationality`,`Position`,`JerseyNumber`) values 
+(3,'dsad','dsad','2023-05-20','das','dasd','das','dasd',0),
+(6,'DSAD','dasds','2023-05-20','7\'0\" (213 ','77 Kg (169.','Danish','Shooting Guard (SG)',2),
+(3123,'Ton','Yacapin','2023-05-20','7\'0\" (213 ','75 Kg (165.','Finnish','Shooting Guard (SG)',312),
+(22222,'HHH','HHH','2023-05-20','6\'9\" (206 ','65 Kg (143.','Dutch','Small Forward (SF)',2131),
+(31231,'zzz','zzz','2023-05-20','5\'9\" (175 ','65 Kg (143.','Finnish','Point Guard (PG)',0),
+(3213213,'HHH','HHH','2023-05-20','6\'9\" (206 ','65 Kg (143.','Dutch','Small Forward (SF)',2131);
+
+/*Table structure for table `team_players` */
+
+DROP TABLE IF EXISTS `team_players`;
+
+CREATE TABLE `team_players` (
+  `TeamName` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
+  `TeamID` int(10) DEFAULT NULL,
+  `PlayerId` int(10) NOT NULL,
+  `PlayerFirstName` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+  `PlayerLastName` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+  `Salary` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`PlayerId`),
+  KEY `FK_PLAYER_idx` (`PlayerId`),
+  KEY `FK_TEAM_idx` (`TeamID`),
+  CONSTRAINT `FK_TEAM` FOREIGN KEY (`TeamID`) REFERENCES `teams` (`TeamID`) ON UPDATE NO ACTION,
+  CONSTRAINT `FK_PLAYER` FOREIGN KEY (`PlayerId`) REFERENCES `players` (`PlayerID`) ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `team_players` */
+
+insert  into `team_players`(`TeamName`,`TeamID`,`PlayerId`,`PlayerFirstName`,`PlayerLastName`,`Salary`) values 
+('XXXX',2222,3,'dsad','dsad',100.00),
+('XXXX',2222,6,'DSAD','dasds',1111.00),
+('XXXX',2222,3123,'Ton','Yacapin',11111.00),
+('XXXX',2222,22222,'HHH','HHH',1111.00),
+('ZZZZZ',3333,31231,'zzz','zzz',111.00);
+
+/*Table structure for table `teams` */
+
+DROP TABLE IF EXISTS `teams`;
+
+CREATE TABLE `teams` (
+  `TeamID` int(10) NOT NULL,
+  `TeamName` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
+  `Country` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `HeadCoach` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `EstablishedYear` int(11) DEFAULT NULL,
+  `Championships` int(11) DEFAULT NULL,
+  `GeneralManager` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`TeamID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `teams` */
+
+insert  into `teams`(`TeamID`,`TeamName`,`Country`,`HeadCoach`,`EstablishedYear`,`Championships`,`GeneralManager`) values 
+(2222,'XXXX','Finland','XXX',2010,2,'XXX'),
+(3333,'ZZZZZ','Finland','XXX',2010,5,'XXX'),
+(44444,'VCX','Iran','XXX',2013,8,'XXX');
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
